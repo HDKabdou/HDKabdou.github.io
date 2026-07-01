@@ -4,33 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TvAbdou - Mes Réseaux</title>
+
+    <!-- Aperçu quand le lien est partagé (Discord, Twitter, etc.) -->
+    <meta property="og:title" content="TvAbdou - Mes Réseaux">
+    <meta property="og:description" content="Retrouve-moi sur Twitch, YouTube, TikTok et plus encore.">
+    <meta property="og:image" content="avatar.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+
+    <!-- Favicon (cercle violet, aucun fichier externe nécessaire) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%238a6fb0'/%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-        body { 
-            background: linear-gradient(135deg, #c7b3e0 0%, #b3e0c7 100%); 
-            color: #333; 
-            font-family: 'Arial', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            padding: 40px 20px; 
-            overflow-x: hidden; 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #c7b3e0 0%, #b3e0c7 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 12s ease infinite;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
 
-        .cursor { width: 15px; height: 15px; border: 2px solid #8a6fb0; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Curseur personnalisé : uniquement sur ordinateur avec souris */
+        @media (hover: hover) and (pointer: fine) {
+            body { cursor: none; }
+            .cursor { display: block; }
+        }
+        .cursor {
+            display: none;
+            width: 15px; height: 15px;
+            border: 2px solid #8a6fb0;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s linear;
+        }
+
         .content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 350px; }
-        .avatar { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #8a6fb0; margin-bottom: 20px; object-fit: cover; animation: float 3s ease-in-out infinite; }
+
+        .avatar-wrap {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 3px solid #8a6fb0; margin-bottom: 20px;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            background: #8a6fb0;
+            animation: float 3s ease-in-out infinite;
+        }
+        .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .avatar-wrap i { font-size: 3rem; color: #fff; }
 
         h1 { font-size: 2rem; margin-bottom: 5px; color: #4a3a60; }
-        .subtitle { color: #5a7a60; font-weight: bold; margin-bottom: 25px; }
+        .subtitle { color: #5a7a60; font-weight: bold; margin-bottom: 25px; letter-spacing: 1px; }
 
-        .btn-link { 
-            display: block; width: 100%; color: #fff; text-decoration: none; padding: 14px; margin: 8px 0; 
-            border-radius: 8px; text-align: center; font-weight: bold; position: relative; 
+        .btn-link {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; color: #fff; text-decoration: none; padding: 14px; margin: 8px 0;
+            border-radius: 8px; text-align: center; font-weight: bold; position: relative;
             overflow: hidden; opacity: 0; animation: fadeInDown 0.6s ease forwards;
+            border: none; cursor: pointer; font-size: 1rem; font-family: inherit;
         }
+        .btn-link i { font-size: 1.1rem; }
 
         /* Couleurs officielles */
         .twitch { background-color: #9146ff; }
@@ -39,10 +89,12 @@
         .snapchat { background-color: #fffc00; color: #000; }
         .instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
         .twitter { background-color: #1da1f2; }
-        .tiktok { background-color: #000000; }
+        .tiktok-toggle { background-color: #000000; justify-content: space-between; padding: 14px 20px; }
+        .tiktok-toggle .chevron { transition: transform 0.3s ease; }
+        .tiktok-toggle.open .chevron { transform: rotate(180deg); }
 
         .btn-link:hover { transform: translateY(-4px); filter: brightness(1.1); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
+
         .btn-link:nth-of-type(1) { animation-delay: 0.1s; }
         .btn-link:nth-of-type(2) { animation-delay: 0.2s; }
         .btn-link:nth-of-type(3) { animation-delay: 0.3s; }
@@ -50,9 +102,24 @@
         .btn-link:nth-of-type(5) { animation-delay: 0.5s; }
         .btn-link:nth-of-type(6) { animation-delay: 0.6s; }
         .btn-link:nth-of-type(7) { animation-delay: 0.7s; }
-        .btn-link:nth-of-type(8) { animation-delay: 0.8s; }
-        .btn-link:nth-of-type(9) { animation-delay: 0.9s; }
-        .btn-link:nth-of-type(10) { animation-delay: 1.0s; }
+
+        /* Sous-menu TikTok */
+        .tiktok-submenu {
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            display: flex; flex-direction: column;
+        }
+        .tiktok-submenu.open { max-height: 300px; }
+        .tiktok-submenu .btn-link {
+            background-color: #1a1a1a;
+            font-size: 0.9rem;
+            padding: 12px;
+            margin: 4px 0;
+            opacity: 1;
+            animation: none;
+        }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
@@ -62,27 +129,46 @@
     <div class="cursor" id="cursor"></div>
 
     <div class="content">
-        <img src="avatar.png" alt="TvAbdou" class="avatar">
+        <div class="avatar-wrap">
+            <img src="avatar.png" alt="TvAbdou" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <i class="fa-solid fa-user" style="display:none;"></i>
+        </div>
         <h1>TvAbdou</h1>
         <div class="subtitle">MES RÉSEAUX</div>
-        
-        <a href="https://www.twitch.tv/tvabdou" class="btn-link twitch">🎮 Twitch</a>
-        <a href="https://www.patreon.com/cw/TVABDOU" class="btn-link patreon">💎 Patreon</a>
-        <a href="https://www.youtube.com/@hdkabdou" class="btn-link youtube">📺 YouTube</a>
-        <a href="https://www.snapchat.com/@abdoubrnk" class="btn-link snapchat">👻 Snapchat</a>
-        <a href="https://www.instagram.com/tvabdoupro/" class="btn-link instagram">📸 Instagram</a>
-        <a href="https://x.com/Tvabdouu" class="btn-link twitter">🐦 Twitter / X</a>
-        <a href="https://www.tiktok.com/@lesfilms2tvabdou" class="btn-link tiktok">🎬 TikTok Films</a>
-        <a href="https://www.tiktok.com/@lesanimes2tvabdou" class="btn-link tiktok">⛩️ TikTok Animes</a>
-        <a href="https://www.tiktok.com/@lesseries2tvabdou" class="btn-link tiktok">🍿 TikTok Séries</a>
-        <a href="https://www.tiktok.com/@clip2abdou" class="btn-link tiktok">✂️ Clip Tiktok</a>
+
+        <a href="https://www.twitch.tv/tvabdou" class="btn-link twitch"><i class="fa-brands fa-twitch"></i> Twitch</a>
+        <a href="https://www.patreon.com/cw/TVABDOU" class="btn-link patreon"><i class="fa-brands fa-patreon"></i> Patreon</a>
+        <a href="https://www.youtube.com/@hdkabdou" class="btn-link youtube"><i class="fa-brands fa-youtube"></i> YouTube</a>
+        <a href="https://www.snapchat.com/@abdoubrnk" class="btn-link snapchat"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+        <a href="https://www.instagram.com/tvabdoupro/" class="btn-link instagram"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="https://x.com/Tvabdouu" class="btn-link twitter"><i class="fa-brands fa-x-twitter"></i> Twitter / X</a>
+
+        <button class="btn-link tiktok-toggle" id="tiktok-toggle">
+            <span><i class="fa-brands fa-tiktok"></i> TikTok</span>
+            <i class="fa-solid fa-chevron-down chevron"></i>
+        </button>
+        <div class="tiktok-submenu" id="tiktok-submenu">
+            <a href="https://www.tiktok.com/@lesfilms2tvabdou" class="btn-link"><i class="fa-solid fa-clapperboard"></i> Films</a>
+            <a href="https://www.tiktok.com/@lesanimes2tvabdou" class="btn-link"><i class="fa-solid fa-torii-gate"></i> Animes</a>
+            <a href="https://www.tiktok.com/@lesseries2tvabdou" class="btn-link"><i class="fa-solid fa-tv"></i> Séries</a>
+            <a href="https://www.tiktok.com/@clip2abdou" class="btn-link"><i class="fa-solid fa-scissors"></i> Clips</a>
+        </div>
     </div>
 
     <script>
+        // Curseur personnalisé (uniquement actif sur ordinateur, voir media query CSS)
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+        });
+
+        // Menu déroulant TikTok
+        const toggle = document.getElementById('tiktok-toggle');
+        const submenu = document.getElementById('tiktok-submenu');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            submenu.classList.toggle('open');
         });
     </script>
 </body>
