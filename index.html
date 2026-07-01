@@ -1,57 +1,248 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TvAbdou - Mes Réseaux</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: radial-gradient(circle at center, #1a0505 0%, #050101 100%); color: #ffffff; font-family: 'Arial', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; overflow-x: hidden; position: relative; }
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .particle { position: absolute; border-radius: 50%; animation: floatUp linear infinite; opacity: 0; }
-        .content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 350px; }
-        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff4d4d; box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); margin-bottom: 15px; object-fit: cover; }
-        h1 { font-size: 1.8rem; margin-bottom: 5px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-        .subtitle { color: #ff4d4d; font-size: 0.95rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 25px; text-shadow: 0 0 8px rgba(255, 77, 77, 0.3); }
-        .btn-link { display: block; width: 100%; color: #ffffff; text-decoration: none; padding: 14px; margin: 8px 0; border-radius: 8px; text-align: center; font-weight: bold; transition: all 0.3s ease; position: relative; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-link:hover { transform: translateY(-4px); }
-        .youtube { background-color: #ff0000; } .youtube:hover { box-shadow: 0 0 20px #ff0000; }
-        .twitch { background-color: #9146ff; } .twitch:hover { box-shadow: 0 0 20px #9146ff; }
-        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); } .instagram:hover { box-shadow: 0 0 20px #dc2743; }
-        .twitter { background-color: #1da1f2; } .twitter:hover { box-shadow: 0 0 20px #1da1f2; }
-        .patreon { background-color: #ff424d; } .patreon:hover { box-shadow: 0 0 20px #ff424d; }
-        .tiktok { background-color: #010101; border-color: rgba(255,255,255,0.2); } .tiktok:hover { box-shadow: 0 0 20px rgba(255,255,255,0.6); }
-        .snapchat { background-color: #fffc00; color: #000000; } .snapchat:hover { box-shadow: 0 0 20px #fffc00; }
-        @keyframes floatUp {
-            0% { transform: translateY(105vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.6; } 90% { opacity: 0.6; }
-            100% { transform: translateY(-5vh) translateX(20px); opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Planning - TvAbdou</title>
+<style>
+    * { box-sizing: border-box; }
+    body { 
+        background: radial-gradient(circle at center, #2a0505 0%, #000000 100%); 
+        color: #ffffff; 
+        font-family: 'Arial', sans-serif; 
+        margin: 0; padding: 20px;
+        display: flex; flex-direction: column; align-items: center;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    #particles {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+    }
+    .particle {
+        position: absolute;
+        bottom: -10px;
+        background: rgba(255, 77, 77, 0.6);
+        border-radius: 50%;
+        box-shadow: 0 0 6px rgba(255, 77, 77, 0.6);
+        animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+        0% { transform: translateY(0) translateX(0); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(-110vh) translateX(var(--drift)); opacity: 0; }
+    }
+
+    h1 {
+        font-size: 4rem; text-transform: uppercase; margin: 40px 0;
+        cursor: pointer; transition: all 0.4s ease;
+        text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        position: relative; z-index: 1;
+    }
+    h1:hover { text-shadow: 0 0 25px #ff4d4d; transform: scale(1.05); }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 12px;
+        width: 95%;
+        max-width: 1400px;
+        margin-top: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .day-column {
+        background: #0d0505;
+        border: 1px solid rgba(255, 77, 77, 0.3);
+        border-radius: 10px;
+        text-align: center;
+        min-height: 560px;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 0.5s ease forwards;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .day-column:nth-child(1) { animation-delay: 0.05s; }
+    .day-column:nth-child(2) { animation-delay: 0.1s; }
+    .day-column:nth-child(3) { animation-delay: 0.15s; }
+    .day-column:nth-child(4) { animation-delay: 0.2s; }
+    .day-column:nth-child(5) { animation-delay: 0.25s; }
+    .day-column:nth-child(6) { animation-delay: 0.3s; }
+    .day-column:nth-child(7) { animation-delay: 0.35s; }
+
+    @keyframes fadeIn {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .day-column:hover {
+        border-color: #ff4d4d;
+        box-shadow: 0 0 18px rgba(255, 77, 77, 0.35);
+        transform: translateY(-4px);
+    }
+
+    .day-column.today {
+        border-color: #ff4d4d;
+        box-shadow: 0 0 22px rgba(255, 77, 77, 0.3);
+    }
+
+    .day-header {
+        padding: 14px 8px 10px;
+        background: rgba(255, 77, 77, 0.08);
+        border-bottom: 1px solid rgba(255, 77, 77, 0.25);
+    }
+
+    .day-header h3 {
+        margin: 0;
+        color: #ff4d4d;
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .today-badge {
+        display: block;
+        font-size: 0.6rem;
+        background: #ff4d4d;
+        color: #000;
+        padding: 2px 10px;
+        border-radius: 10px;
+        margin: 6px auto 0;
+        width: fit-content;
+        font-weight: bold;
+    }
+
+    .day-visual {
+        flex: 1;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        min-height: 400px;
+    }
+
+    .day-visual.no-image {
+        background: linear-gradient(180deg, rgba(255,77,77,0.05) 0%, rgba(0,0,0,0.3) 100%);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .day-visual::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 55%;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+        pointer-events: none;
+    }
+
+    .time-badge {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 12px 6px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255,77,77,0.8);
+        letter-spacing: 1px;
+    }
+
+    .rest-badge {
+        border: 1px solid rgba(255, 77, 77, 0.5);
+        color: #ff4d4d;
+        padding: 8px 18px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+        text-shadow: 0 0 8px rgba(255, 77, 77, 0.6);
+    }
+
+    @media (max-width: 900px) {
+        .grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+        .day-column { min-height: 380px; }
+        .day-visual { min-height: 260px; }
+        h1 { font-size: 2.5rem; }
+    }
+</style>
 </head>
 <body>
-    <div class="particles">
-        <div class="particle" style="width: 6px; height: 6px; background: #ff0000; left: 10%; animation: floatUp 8s infinite 1s;"></div>
-        <div class="particle" style="width: 10px; height: 10px; background: #000000; border: 1px solid #ff0000; left: 25%; animation: floatUp 12s infinite 3s;"></div>
-        <div class="particle" style="width: 4px; height: 4px; background: #ff4d4d; left: 45%; animation: floatUp 6s infinite 0s;"></div>
-        <div class="particle" style="width: 8px; height: 8px; background: #110000; border: 1px solid #330000; left: 60%; animation: floatUp 10s infinite 5s;"></div>
-        <div class="particle" style="width: 5px; height: 5px; background: #ff0000; left: 80%; animation: floatUp 7s infinite 2s;"></div>
-        <div class="particle" style="width: 8px; height: 8px; background: #ff4d4d; left: 90%; animation: floatUp 9s infinite 4s;"></div>
-    </div>
-    <div class="content">
-        <img src="avatar.png" alt="TvAbdou" class="avatar">
-        <h1>TvAbdou</h1>
-        <div class="subtitle">Mes réseaux</div>
-        <a href="https://www.twitch.tv/tvabdou" target="_blank" class="btn-link twitch">Twitch</a>
-        <a href="https://www.patreon.com/cw/TVABDOU" target="_blank" class="btn-link patreon">Patreon</a>
-        <a href="https://www.youtube.com/@hdkabdou" target="_blank" class="btn-link youtube">YouTube</a>
-        <a href="https://www.snapchat.com/@abdoubrnk" target="_blank" class="btn-link snapchat">Snapchat</a>
-        <a href="https://www.instagram.com/tvabdoupro/" target="_blank" class="btn-link instagram">Instagram</a>
-        <a href="https://x.com/Tvabdouu" target="_blank" class="btn-link twitter">Twitter / X</a>
-        <a href="https://www.tiktok.com/@lesfilms2tvabdou" target="_blank" class="btn-link tiktok">TikTok Films</a>
-        <a href="https://www.tiktok.com/@lesanimes2tvabdou" target="_blank" class="btn-link tiktok">TikTok Animes</a>
-        <a href="https://www.tiktok.com/@lesseries2tvabdou" target="_blank" class="btn-link tiktok">TikTok Séries</a>
-        <a href="https://www.tiktok.com/@clip2abdou" target="_blank" class="btn-link tiktok">Clip Tiktok</a>
-    </div>
+    <div id="particles"></div>
+    <h1>Planning</h1>
+    <div class="grid" id="planning-grid"></div>
+
+<script>
+    // ✏️ MODIFIE UNIQUEMENT CETTE PARTIE CHAQUE SEMAINE ✏️
+    // image : URL de l'image (ou null si repos)
+    // heure : ex "20H30" (laisse "" si pas d'heure à afficher)
+    const planning = {
+        "Lundi":    { image: null, heure: "" },
+        "Mardi":    { image: "https://exemple.com/image1.jpg", heure: "20H30" },
+        "Mercredi": { image: "https://exemple.com/image1.jpg", heure: "20H30" },
+        "Jeudi":    { image: null, heure: "" },
+        "Vendredi": { image: "https://exemple.com/image2.jpg", heure: "20H30" },
+        "Samedi":   { image: "https://exemple.com/image2.jpg", heure: "20H30" },
+        "Dimanche": { image: "https://exemple.com/image2.jpg", heure: "20H30" }
+    };
+    // ✏️ FIN DE LA PARTIE À MODIFIER ✏️
+
+    const grid = document.getElementById('planning-grid');
+    const jsDay = new Date().getDay();
+    const joursOrdre = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+    const todayName = joursOrdre[jsDay];
+
+    Object.keys(planning).forEach(jour => {
+        const { image, heure } = planning[jour];
+        const col = document.createElement('div');
+        col.className = 'day-column' + (jour === todayName ? ' today' : '');
+
+        const visualStyle = image ? `style="background-image: url('${image}')"` : '';
+        const visualClass = image ? 'day-visual' : 'day-visual no-image';
+
+        const innerContent = image
+            ? `<div class="time-badge">${heure}</div>`
+            : `<div class="rest-badge">Repos</div>`;
+
+        col.innerHTML = `
+            <div class="day-header">
+                <h3>${jour}</h3>
+                ${jour === todayName ? '<span class="today-badge">Aujourd\'hui</span>' : ''}
+            </div>
+            <div class="${visualClass}" ${visualStyle}>
+                ${innerContent}
+            </div>
+        `;
+        grid.appendChild(col);
+    });
+
+    // Particules flottantes en fond
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 3 + 1;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.setProperty('--drift', (Math.random() * 100 - 50) + 'px');
+        p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        particlesContainer.appendChild(p);
+    }
+</script>
 </body>
 </html>
