@@ -51,7 +51,7 @@
         h1 { font-size: 2rem; margin-bottom: 5px; text-shadow: 0 0 15px #ff4d4d; }
         .subtitle { color: #ff4d4d; font-size: 0.95rem; font-weight: bold; margin-bottom: 25px; }
 
-        /* --- Boutons avec apparition et effet lumière --- */
+        /* --- Boutons --- */
         .btn-link { 
             display: block; width: 100%; color: #ffffff; text-decoration: none; padding: 14px; margin: 8px 0; 
             border-radius: 8px; text-align: center; font-weight: bold; position: relative; 
@@ -68,16 +68,15 @@
         .btn-link:hover::before { left: 100%; }
         .btn-link:hover { transform: translateY(-4px); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
 
-        /* Styles couleurs */
-        .youtube { background-color: #ff0000; animation-delay: 0.1s; }
-        .twitch { background-color: #9146ff; animation-delay: 0.2s; }
-        .instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); animation-delay: 0.3s; }
-        .twitter { background-color: #1da1f2; animation-delay: 0.4s; }
-        .patreon { background-color: #ff424d; animation-delay: 0.5s; }
-        .tiktok { background-color: #010101; border: 1px solid #ff4d4d; animation-delay: 0.6s; }
-        .snapchat { background-color: #fffc00; color: #000; animation-delay: 0.7s; }
+        /* Styles couleurs avec nouveaux délais */
+        .twitch { background-color: #9146ff; animation-delay: 0.1s; }
+        .patreon { background-color: #ff424d; animation-delay: 0.2s; }
+        .youtube { background-color: #ff0000; animation-delay: 0.3s; }
+        .snapchat { background-color: #fffc00; color: #000; animation-delay: 0.4s; }
+        .instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); animation-delay: 0.5s; }
+        .twitter { background-color: #1da1f2; animation-delay: 0.6s; }
+        .tiktok { background-color: #010101; border: 1px solid #ff4d4d; animation-delay: 0.7s; }
 
-        /* Animations */
         @keyframes floatUp { 0% { transform: translateY(105vh); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-5vh); opacity: 0; } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
@@ -89,7 +88,6 @@
         <div class="particle" style="width: 6px; height: 6px; background: #ff0000; left: 10%; animation: floatUp 8s infinite 1s;"></div>
         <div class="particle" style="width: 10px; height: 10px; border: 1px solid #ff0000; left: 25%; animation: floatUp 12s infinite 3s;"></div>
         <div class="particle" style="width: 4px; height: 4px; background: #ff4d4d; left: 45%; animation: floatUp 6s infinite 0s;"></div>
-        <div class="particle" style="width: 8px; height: 8px; background: #330000; left: 60%; animation: floatUp 10s infinite 5s;"></div>
     </div>
 
     <div class="content">
@@ -97,14 +95,17 @@
         <h1>TvAbdou</h1>
         <div class="subtitle">MES RÉSEAUX</div>
         
+        <!-- Nouvel ordre -->
         <a href="https://www.twitch.tv/tvabdou" class="btn-link twitch">🎮 Twitch</a>
+        <a href="https://www.patreon.com/cw/TVABDOU" class="btn-link patreon">💎 Patreon</a>
         <a href="https://www.youtube.com/@hdkabdou" class="btn-link youtube">📺 YouTube</a>
+        <a href="https://www.snapchat.com/@abdoubrnk" class="btn-link snapchat">👻 Snapchat</a>
+        
         <a href="https://www.instagram.com/tvabdoupro/" class="btn-link instagram">📸 Instagram</a>
         <a href="https://x.com/Tvabdouu" class="btn-link twitter">🐦 Twitter / X</a>
         <a href="https://www.tiktok.com/@lesfilms2tvabdou" class="btn-link tiktok">🎬 TikTok Films</a>
         <a href="https://www.tiktok.com/@lesanimes2tvabdou" class="btn-link tiktok">⛩️ TikTok Animes</a>
         <a href="https://www.tiktok.com/@lesseries2tvabdou" class="btn-link tiktok">🍿 TikTok Séries</a>
-        <a href="https://www.patreon.com/cw/TVABDOU" class="btn-link patreon">💎 Patreon</a>
     </div>
 
     <script>
