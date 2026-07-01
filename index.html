@@ -7,8 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         body { 
-            /* Fond avec la couleur #C9BCF1 */
-            background: linear-gradient(135deg, #c7b3e0 0%, #C9BCF1 100%); 
+            background: linear-gradient(135deg, #c7b3e0 0%, #b3e0c7 100%); 
             color: #333; 
             font-family: 'Arial', sans-serif; 
             display: flex; 
@@ -22,13 +21,7 @@
 
         .cursor { width: 15px; height: 15px; border: 2px solid #8a6fb0; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
         .content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 350px; }
-        
-        .avatar { 
-            width: 120px; height: 120px; border-radius: 50%; 
-            border: 3px solid #8a6fb0; 
-            margin-bottom: 20px; object-fit: cover; 
-            animation: float 3s ease-in-out infinite; 
-        }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #8a6fb0; margin-bottom: 20px; object-fit: cover; animation: float 3s ease-in-out infinite; }
 
         h1 { font-size: 2rem; margin-bottom: 5px; color: #4a3a60; }
         .subtitle { color: #5a7a60; font-weight: bold; margin-bottom: 25px; }
@@ -39,7 +32,7 @@
             overflow: hidden; opacity: 0; animation: fadeInDown 0.6s ease forwards;
         }
 
-        /* Couleurs officielles des plateformes */
+        /* Couleurs officielles */
         .twitch { background-color: #9146ff; }
         .patreon { background-color: #ff424d; }
         .youtube { background-color: #ff0000; }
@@ -50,7 +43,6 @@
 
         .btn-link:hover { transform: translateY(-4px); filter: brightness(1.1); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
-        /* Délais pour l'apparition en cascade */
         .btn-link:nth-of-type(1) { animation-delay: 0.1s; }
         .btn-link:nth-of-type(2) { animation-delay: 0.2s; }
         .btn-link:nth-of-type(3) { animation-delay: 0.3s; }
