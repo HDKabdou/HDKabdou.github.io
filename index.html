@@ -5,53 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TvAbdou - Mes Réseaux</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: radial-gradient(circle at center, #1a0505 0%, #050101 100%); color: #ffffff; font-family: 'Arial', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; overflow-x: hidden; position: relative; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        body { 
+            background: radial-gradient(circle at center, #1a0505 0%, #050101 100%); 
+            color: #ffffff; 
+            font-family: 'Arial', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 40px 20px; 
+            overflow-x: hidden; 
+            position: relative; 
+        }
+
+        /* --- Curseur Personnalisé --- */
+        .cursor {
+            width: 15px; height: 15px;
+            border: 2px solid #ff4d4d;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+        }
+
+        /* --- Particules --- */
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .particle { position: absolute; border-radius: 50%; animation: floatUp linear infinite; opacity: 0; }
-        .content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 350px; }
-        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff4d4d; box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); margin-bottom: 15px; object-fit: cover; }
-        h1 { font-size: 1.8rem; margin-bottom: 5px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-        .subtitle { color: #ff4d4d; font-size: 0.95rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 25px; text-shadow: 0 0 8px rgba(255, 77, 77, 0.3); }
-        .btn-link { display: block; width: 100%; color: #ffffff; text-decoration: none; padding: 14px; margin: 8px 0; border-radius: 8px; text-align: center; font-weight: bold; transition: all 0.3s ease; position: relative; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-link:hover { transform: translateY(-4px); }
-        .youtube { background-color: #ff0000; } .youtube:hover { box-shadow: 0 0 20px #ff0000; }
-        .twitch { background-color: #9146ff; } .twitch:hover { box-shadow: 0 0 20px #9146ff; }
-        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); } .instagram:hover { box-shadow: 0 0 20px #dc2743; }
-        .twitter { background-color: #1da1f2; } .twitter:hover { box-shadow: 0 0 20px #1da1f2; }
-        .patreon { background-color: #ff424d; } .patreon:hover { box-shadow: 0 0 20px #ff424d; }
-        .tiktok { background-color: #010101; border-color: rgba(255,255,255,0.2); } .tiktok:hover { box-shadow: 0 0 20px rgba(255,255,255,0.6); }
-        .snapchat { background-color: #fffc00; color: #000000; } .snapchat:hover { box-shadow: 0 0 20px #fffc00; }
-        @keyframes floatUp {
-            0% { transform: translateY(105vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.6; } 90% { opacity: 0.6; }
-            100% { transform: translateY(-5vh) translateX(20px); opacity: 0; }
+        
+        .content { 
+            position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 350px; 
         }
+
+        /* --- Avatar avec Halo --- */
+        .avatar { 
+            width: 120px; height: 120px; border-radius: 50%; 
+            border: 3px solid #ff4d4d; 
+            box-shadow: 0 0 20px #ff4d4d; 
+            margin-bottom: 20px; object-fit: cover;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        h1 { font-size: 2rem; margin-bottom: 5px; text-shadow: 0 0 15px #ff4d4d; }
+        .subtitle { color: #ff4d4d; font-size: 0.95rem; font-weight: bold; margin-bottom: 25px; }
+
+        /* --- Boutons avec apparition et effet lumière --- */
+        .btn-link { 
+            display: block; width: 100%; color: #ffffff; text-decoration: none; padding: 14px; margin: 8px 0; 
+            border-radius: 8px; text-align: center; font-weight: bold; position: relative; 
+            border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden;
+            opacity: 0; animation: fadeInDown 0.6s ease forwards;
+        }
+
+        .btn-link::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        .btn-link:hover::before { left: 100%; }
+        .btn-link:hover { transform: translateY(-4px); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
+
+        /* Styles couleurs */
+        .youtube { background-color: #ff0000; animation-delay: 0.1s; }
+        .twitch { background-color: #9146ff; animation-delay: 0.2s; }
+        .instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); animation-delay: 0.3s; }
+        .twitter { background-color: #1da1f2; animation-delay: 0.4s; }
+        .patreon { background-color: #ff424d; animation-delay: 0.5s; }
+        .tiktok { background-color: #010101; border: 1px solid #ff4d4d; animation-delay: 0.6s; }
+        .snapchat { background-color: #fffc00; color: #000; animation-delay: 0.7s; }
+
+        /* Animations */
+        @keyframes floatUp { 0% { transform: translateY(105vh); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-5vh); opacity: 0; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+    <div class="cursor" id="cursor"></div>
     <div class="particles">
         <div class="particle" style="width: 6px; height: 6px; background: #ff0000; left: 10%; animation: floatUp 8s infinite 1s;"></div>
-        <div class="particle" style="width: 10px; height: 10px; background: #000000; border: 1px solid #ff0000; left: 25%; animation: floatUp 12s infinite 3s;"></div>
+        <div class="particle" style="width: 10px; height: 10px; border: 1px solid #ff0000; left: 25%; animation: floatUp 12s infinite 3s;"></div>
         <div class="particle" style="width: 4px; height: 4px; background: #ff4d4d; left: 45%; animation: floatUp 6s infinite 0s;"></div>
-        <div class="particle" style="width: 8px; height: 8px; background: #110000; border: 1px solid #330000; left: 60%; animation: floatUp 10s infinite 5s;"></div>
-        <div class="particle" style="width: 5px; height: 5px; background: #ff0000; left: 80%; animation: floatUp 7s infinite 2s;"></div>
-        <div class="particle" style="width: 8px; height: 8px; background: #ff4d4d; left: 90%; animation: floatUp 9s infinite 4s;"></div>
+        <div class="particle" style="width: 8px; height: 8px; background: #330000; left: 60%; animation: floatUp 10s infinite 5s;"></div>
     </div>
+
     <div class="content">
         <img src="avatar.png" alt="TvAbdou" class="avatar">
         <h1>TvAbdou</h1>
-        <div class="subtitle">Mes réseaux</div>
-        <a href="https://www.twitch.tv/tvabdou" target="_blank" class="btn-link twitch">Twitch</a>
-        <a href="https://www.patreon.com/cw/TVABDOU" target="_blank" class="btn-link patreon">Patreon</a>
-        <a href="https://www.youtube.com/@hdkabdou" target="_blank" class="btn-link youtube">YouTube</a>
-        <a href="https://www.snapchat.com/@abdoubrnk" target="_blank" class="btn-link snapchat">Snapchat</a>
-        <a href="https://www.instagram.com/tvabdoupro/" target="_blank" class="btn-link instagram">Instagram</a>
-        <a href="https://x.com/Tvabdouu" target="_blank" class="btn-link twitter">Twitter / X</a>
-        <a href="https://www.tiktok.com/@lesfilms2tvabdou" target="_blank" class="btn-link tiktok">TikTok Films</a>
-        <a href="https://www.tiktok.com/@lesanimes2tvabdou" target="_blank" class="btn-link tiktok">TikTok Animes</a>
-        <a href="https://www.tiktok.com/@lesseries2tvabdou" target="_blank" class="btn-link tiktok">TikTok Séries</a>
-        <a href="https://www.tiktok.com/@clip2abdou" target="_blank" class="btn-link tiktok">Clip Tiktok</a>
+        <div class="subtitle">MES RÉSEAUX</div>
+        
+        <a href="https://www.twitch.tv/tvabdou" class="btn-link twitch">🎮 Twitch</a>
+        <a href="https://www.youtube.com/@hdkabdou" class="btn-link youtube">📺 YouTube</a>
+        <a href="https://www.instagram.com/tvabdoupro/" class="btn-link instagram">📸 Instagram</a>
+        <a href="https://x.com/Tvabdouu" class="btn-link twitter">🐦 Twitter / X</a>
+        <a href="https://www.tiktok.com/@lesfilms2tvabdou" class="btn-link tiktok">🎬 TikTok Films</a>
+        <a href="https://www.tiktok.com/@lesanimes2tvabdou" class="btn-link tiktok">⛩️ TikTok Animes</a>
+        <a href="https://www.tiktok.com/@lesseries2tvabdou" class="btn-link tiktok">🍿 TikTok Séries</a>
+        <a href="https://www.patreon.com/cw/TVABDOU" class="btn-link patreon">💎 Patreon</a>
     </div>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+    </script>
 </body>
 </html>
